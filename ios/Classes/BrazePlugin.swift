@@ -9,9 +9,6 @@ public class BrazePlugin: NSObject, FlutterPlugin, BrazeDelegate {
 
   public static var braze: Braze? = nil
 
-  private static var inAppMessageIdsToContexts: [String: Braze.InAppMessage.Context] = [:]
-  private static var contentCardIdsToContexts: [String: Braze.ContentCard.Context] = [:]
-
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "braze_plugin", binaryMessenger: registrar.messenger())
     let instance = BrazePlugin()
@@ -493,11 +490,6 @@ public class BrazePlugin: NSObject, FlutterPlugin, BrazeDelegate {
 
     do {
       var inAppMessage: Braze.InAppMessage = try Braze.InAppMessage.init(inAppMessageRaw)
-
-      // TODO: New context is being allocated each time, so can log duplicate impressions
-      let context = Braze.InAppMessage.Context(message: inAppMessage, using: braze)
-      inAppMessage.context = context
-
       return inAppMessage
     } catch {
       print("Error parsing in-app message from jsonString: \(jsonString), error: \(error)")
@@ -511,11 +503,6 @@ public class BrazePlugin: NSObject, FlutterPlugin, BrazeDelegate {
 
     do {
       var contentCard: Braze.ContentCard = try Braze.ContentCard.init(contentCardRaw)
-
-      // TODO: New context is being allocated each time, so can log duplicate impressions
-      let context = Braze.ContentCard.Context(card: contentCard, using: braze)
-      contentCard.context = context
-
       return contentCard
     } catch {
       print("Error parsing Content Card from jsonString: \(jsonString), error: \(error)")
