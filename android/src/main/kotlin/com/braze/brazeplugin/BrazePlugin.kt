@@ -197,7 +197,9 @@ class BrazePlugin : MethodCallHandler, FlutterPlugin, ActivityAware {
                 "presentInAppMessage" -> {
                     val inAppMessage = Braze.getInstance(context)
                         .deserializeInAppMessageString(call.argument("inAppMessageString"))
-                    BrazeInAppMessageManager.getInstance().displayInAppMessage(inAppMessage, false)
+                    if (inAppMessage != null) {
+                        BrazeInAppMessageManager.getInstance().displayInAppMessage(inAppMessage, false)
+                    }
                 }
                 "logInAppMessageClicked" -> {
                     Braze.getInstance(context)
