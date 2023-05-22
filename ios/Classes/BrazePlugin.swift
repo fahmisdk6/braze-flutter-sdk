@@ -110,7 +110,7 @@ public class BrazePlugin: NSObject, FlutterPlugin, BrazeDelegate {
         return
       }
       if let inAppMessage = BrazePlugin.inAppMessage(from: inAppMessageJSONString, braze: braze) {
-        BrazePlugin.braze?.inAppMessagePresenter?.present(message: inAppMessage)
+        BrazePlugin.braze?.inAppMessagePresenter?.presentNow(message: inAppMessage)
       }
 
     case "logInAppMessageClicked":
